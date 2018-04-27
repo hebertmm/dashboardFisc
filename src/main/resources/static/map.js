@@ -1,5 +1,6 @@
       var map;
       var bounds;
+      var infoWindow;
       document.addEventListener('DOMContentLoaded', function () {
           if (document.querySelectorAll('#map').length > 0)
           {
@@ -15,12 +16,11 @@
           }
         });
       function initMap() {
-
+        infoWindow = new google.maps.InfoWindow({content: "Teste"});
         bounds = new google.maps.LatLngBounds();
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 7,
           center: {lat:-16.33, lng:-49.18},
-          mapTypeId: 'hybrid'
         });
 
         plotMarkers(-16.6921,-49.2677);
@@ -35,12 +35,16 @@
     var position = new google.maps.LatLng(lat, long);
     var mark = new google.maps.Marker({
           position: position,
+          label: "teste",
           map: map,
           animation: google.maps.Animation.DROP,
-          icon: "target.png"
+          icon: {url: "target.png", labelOrigin: {x:0,y:0}}
 
         })
     bounds.extend(position);
     map.fitBounds(bounds);
+    google.maps.event.addListener(mark, 'click', function(){
+        infoWindow.open(map, mark);
+    });
   }
 
