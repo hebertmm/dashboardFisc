@@ -15,28 +15,47 @@
 </head>
 <body>
 <div class="container">
-    <form>
+    <form action="#" th:object="${team}" th:action="@{/addTeam}" method="post">
         <div class="form-group">
             <label for="desc">Descrição</label>
-            <input type="text" class="form-control" id="desc" placeholder="Digite a descrição da Equipe">
+            <input type="text" class="form-control" id="desc" placeholder="Digite a descrição da Equipe" th:field="*{description}">
 
         </div>
-        <div class="input-group mb-3">
-            <select class="form-control" id="selFiscal">
-                <option th:each="person : ${persons}" th:value="${person.id}" th:text="${person.firstName}">1</option>
-            </select>
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="btnAdd">Adicionar</button>
-            </div>
-        </div>
         <div class=container id="listFiscais">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Seq</th>
+                    <th>Nome</th>
+                    <th>
+                        <button type="submit" name="addMember">Add Member</button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="person , stat : *{members}">
+                    <td th:text="${stat.count}">1</td>
+                    <td>
+                        <select th:field="*{members[__${stat.index}__]}">
+                            <option th:each="item : ${allPersons}"
+                                    th:value="${item.id}"
+                                    th:text="${item.firstName}">Thymus Thymi</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <button type="submit" name="removeMember" th:value="${stat.index}">Remove row</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
         <div class="form-group">
             <label for="tel">Telefone</label>
-            <input type="text" class="form-control" id="tel" placeholder="Digite o número do telefone">
-
+            <input type="text" class="form-control" id="tel" placeholder="Digite o número do telefone" th:field="*{telefone}">
         </div>
+        <button type="submit" name="saveTeam" class="btn btn-primary">Salvar</button>
     </form>
 </div>
 <!-- Optional JavaScript -->
@@ -50,6 +69,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="addTeam.js"></script>
 </body>
 </html>

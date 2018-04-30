@@ -6,7 +6,6 @@ public class Target {
     @Id
     private String id;
     private String address;
-    private String latitude;
-    private String longitude;
+    private Location location;
     private String description;
 }

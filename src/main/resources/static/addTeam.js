@@ -11,6 +11,7 @@ function addPerson(){
     item.setAttribute("role", "alert");
     item.id = $("#selFiscal option:selected").val();
     item.innerHTML = $("#selFiscal option:selected").text();
+    alert(/*[[${persons.size}]]*/+ "a")
     var close = document.createElement("button");
     close.setAttribute("type","button");
     close.setAttribute("data-dismiss","alert");
