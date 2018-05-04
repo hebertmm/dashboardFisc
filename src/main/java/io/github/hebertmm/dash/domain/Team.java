@@ -7,7 +7,7 @@ public class Team {
     private String id;
     private List<Person> members = new ArrayList<>();
     private String description;
-    private String telefone;
+    private RemoteDevice remoteDevice;
     private Location localAtual;
     private Target objetivo;
 
@@ -43,11 +43,19 @@ public class Team {
         this.description = description;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public RemoteDevice getRemoteDevice() {
+        return remoteDevice;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setRemoteDevice(RemoteDevice remoteDevice) {
+        this.remoteDevice = remoteDevice;
+    }
+
+    public Target getObjetivo() {
+        return objetivo;
+    }
+
+    public void setObjetivo(Target objetivo) {
+        this.objetivo = objetivo;
     }
 }
