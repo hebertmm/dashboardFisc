@@ -1,11 +1,11 @@
 package io.github.***REMOVED***mm.dash.domain;
 
-public class Location {
+public class GeoLocation {
     private String type;
     private String coordinates[] = new String[2];
 
-    public Location(){this.type = "POINT";}
-    public Location(String type, String lng, String lat) {
+    public GeoLocation(){this.type = "POINT";}
+    public GeoLocation(String type, String lng, String lat) {
         this.type = type;
         this.coordinates[0] = lng;
         this.coordinates[1] = lat;

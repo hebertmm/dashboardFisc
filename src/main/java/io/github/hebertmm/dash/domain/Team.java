@@ -8,7 +8,7 @@ public class Team {
     private List<Person> members = new ArrayList<>();
     private String description;
     private RemoteDevice remoteDevice;
-    private Location localAtual;
+    private GeoLocation localAtual;
     private Target objetivo;
 
     public String getId() {
