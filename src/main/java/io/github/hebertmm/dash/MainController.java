@@ -1,6 +1,7 @@
 package io.github.***REMOVED***mm.dash;
 
 import io.github.***REMOVED***mm.dash.domain.*;
+import io.github.***REMOVED***mm.dash.util.geoutils.Geoutils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/")
@@ -38,7 +37,7 @@ public class MainController {
     @ModelAttribute("allRemotes")
     public List<RemoteDevice> populateRemotes() {return this.remoteDeviceRepository.findAll();}
 
-    @GetMapping(path="/add")
+    @GetMapping(path="/addPerson")
     public ModelAndView addPerson(){
         ModelAndView mv = new ModelAndView("/index.html");
         mv.addObject("person", new Person());
@@ -83,6 +82,12 @@ public class MainController {
         mv.addObject("target", new Target());
         return mv;
     }
+    @PostMapping(path="/addTarget", params = {"geocode"})
+    public String geocodeAddress(Target target, BindingResult result, HttpServletRequest req){
+        Geoutils geoutils = new Geoutils();
+        target.setGeoLocation(geoutils.geocodeForLocation(req.getParameter("address")));
+        return "addTarget";
+    }
     @PostMapping(path="/person")
     @ResponseBody
     public String savePerson(@Valid Person person, BindingResult result){
@@ -112,12 +117,12 @@ public class MainController {
     }
     @GetMapping(path="/map")
     public ModelAndView showMap(){
-        List<Location> loc = new ArrayList<>();
-        loc.add(new Location("POINT", "-16.6921","-49.2672"));
-        loc.add(new Location("POINT", "-16.5921","-49.2697"));
-        loc.add(new Location("POINT", "-16.6921","-48.2677"));
-        loc.add(new Location("POINT", "-16.621","-49.1674"));
-        loc.add(new Location("POINT", "-16.612","-49.05677"));
+        List<GeoLocation> loc = new ArrayList<>();
+        loc.add(new GeoLocation("POINT", "-16.6921","-49.2672"));
+        loc.add(new GeoLocation("POINT", "-16.5921","-49.2697"));
+        loc.add(new GeoLocation("POINT", "-16.6921","-48.2677"));
+        loc.add(new GeoLocation("POINT", "-16.621","-49.1674"));
+        loc.add(new GeoLocation("POINT", "-16.612","-49.05677"));
         ModelAndView mv = new ModelAndView("map.html");
         mv.addObject("point",loc);
         return mv;

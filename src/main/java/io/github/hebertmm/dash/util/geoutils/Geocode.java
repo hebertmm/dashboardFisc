@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash.util.geocode;
+package io.github.***REMOVED***mm.dash.util.geoutils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;

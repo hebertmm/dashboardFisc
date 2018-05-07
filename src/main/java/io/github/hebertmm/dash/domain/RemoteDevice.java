@@ -5,7 +5,7 @@ public class RemoteDevice {
     private String desc;
     private String number;
     private String messagingId;
-    private Location lastLocation;
+    private GeoLocation lastGeoLocation;
 
     public String getId() {
         return id;
@@ -39,11 +39,11 @@ public class RemoteDevice {
         this.messagingId = messagingId;
     }
 
-    public Location getLastLocation() {
-        return lastLocation;
+    public GeoLocation getLastGeoLocation() {
+        return lastGeoLocation;
     }
 
-    public void setLastLocation(Location lastLocation) {
-        this.lastLocation = lastLocation;
+    public void setLastGeoLocation(GeoLocation lastGeoLocation) {
+        this.lastGeoLocation = lastGeoLocation;
     }
 }

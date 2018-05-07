@@ -1,6 +1,8 @@
 package io.github.***REMOVED***mm.dash;
 
-import io.github.***REMOVED***mm.dash.util.geocode.Geocode;
+import io.github.***REMOVED***mm.dash.util.geoutils.Geocode;
+import io.github.***REMOVED***mm.dash.util.geoutils.Geoutils;
+import io.github.***REMOVED***mm.dash.util.geoutils.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,12 +26,12 @@ public class DashApplication {
 		return builder.build();
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 		return args -> {
-			Geocode address = restTemplate.getForObject(
-					Geocode.GEOCODE_URL_PREFIX+"rua c-21 jardim américa, goiânia"+Geocode.GEOCODE_URL_SUFIX, Geocode.class);
-			log.info(address.toString());
+			Geoutils geo = new Geoutils();
+			GeoLocation loc = geo.geocodeForLocation("rua c-21 jardim america, goiania, go");
+			log.info("Lat: " + loc.getLat() + " Lng: "+ loc.getLng());
 		};
-	}
+	}*/
 }

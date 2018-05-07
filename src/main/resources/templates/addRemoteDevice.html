@@ -26,11 +26,11 @@
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label for="lat">Latitude</label>
-                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{lastLocation.coordinates[0]}" placeholder="Latitude">
+                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{lastGeoLocation.coordinates[0]}" placeholder="Latitude">
             </div>
             <div class="col-auto">
                 <label for="lng">Longitude</label>
-                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{lastLocation.coordinates[1]}" placeholder="Longitude">
+                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{lastGeoLocation.coordinates[1]}" placeholder="Longitude">
             </div>
         </div>
         <div class="form-group">

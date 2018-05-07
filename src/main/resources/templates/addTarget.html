@@ -23,18 +23,18 @@
         <div class="form-row align-items-bottom">
             <div class="col-auto">
 
-                <input type="text" class="form-control" id="end" placeholder="Digite o Endereço" th:field="*{address}">
+                <input type="text" name="address" class="form-control" id="end" placeholder="Digite o Endereço" th:field="*{address}" th:value="*{address}">
             </div>
             <div class="col-auto">
                 <button type="submit" name="geocode" class="btn btn-primary">Geocodificar</button>
             </div>
             <div class="col-auto">
 
-                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{location.coordinates[0]}" placeholder="Latitude">
+                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{geoLocation.coordinates[0]}" placeholder="Latitude">
             </div>
             <div class="col-auto">
 
-                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{location.coordinates[1]}" placeholder="Longitude">
+                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{geoLocation.coordinates[1]}" placeholder="Longitude">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Salvar</button>

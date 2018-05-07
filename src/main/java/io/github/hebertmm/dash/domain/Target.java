@@ -6,7 +6,7 @@ public class Target {
     @Id
     private String id;
     private String address;
-    private Location location;
+    private GeoLocation geoLocation;
     private String description;
     private String type;
 
@@ -26,12 +26,12 @@ public class Target {
         this.address = address;
     }
 
-    public Location getLocation() {
-        return location;
+    public GeoLocation getGeoLocation() {
+        return geoLocation;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setGeoLocation(GeoLocation geoLocation) {
+        this.geoLocation = geoLocation;
     }
 
     public String getDescription() {
