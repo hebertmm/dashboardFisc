@@ -28,6 +28,9 @@ public class MainController {
     private TeamRepository teamRepository;
     @Autowired
     private RemoteDeviceRepository remoteDeviceRepository;
+    @Autowired
+    private TargetRepository targetRepository;
+
     private RestTemplate restTemplate;
 
     @ModelAttribute("allPersons")
@@ -88,6 +91,15 @@ public class MainController {
         target.setGeoLocation(geoutils.geocodeForLocation(req.getParameter("address")));
         return "addTarget";
     }
+    @PostMapping(path="/addTarget", params = {"save"})
+    public String saveTarget(Target target, BindingResult result){
+        if(result.hasErrors())
+            return "erro";
+        else {
+            targetRepository.save(target);
+            return "addTarget";
+        }
+    }
     @PostMapping(path="/person")
     @ResponseBody
     public String savePerson(@Valid Person person, BindingResult result){
@@ -127,9 +139,13 @@ public class MainController {
         mv.addObject("point",loc);
         return mv;
     }
+    @GetMapping(path="/map2")
+    public ModelAndView showMap2(){
+        return new ModelAndView("map2.html");
+    }
     @GetMapping(path="/markersList")
     @ResponseBody
-    public String markersList(){
-        return "";
+    public List<Team> markersList(){
+        return teamRepository.findAll();
     }
 }

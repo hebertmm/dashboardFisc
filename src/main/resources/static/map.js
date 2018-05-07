@@ -1,50 +1,77 @@
-      var map;
-      var bounds;
-      var infoWindow;
-      document.addEventListener('DOMContentLoaded', function () {
-          if (document.querySelectorAll('#map').length > 0)
-          {
-            if (document.querySelector('html').lang)
-              lang = document.querySelector('html').lang;
-            else
-              lang = 'en';
+    var cities = [
+        {
+            city : 'Toronto',
+            desc : 'This is the best city in the world!',
+            lat : 43.7000,
+            long : -79.4000
+        },
+        {
+            city : 'New York',
+            desc : 'This city is aiiiiite!',
+            lat : 40.6700,
+            long : -73.9400
+        },
+        {
+            city : 'Chicago',
+            desc : 'This is the second best city in the world!',
+            lat : 41.8819,
+            long : -87.6278
+        },
+        {
+            city : 'Los Angeles',
+            desc : 'This city is live!',
+            lat : 34.0500,
+            long : -118.2500
+        },
+        {
+            city : 'Las Vegas',
+            desc : 'Sin City...\'nuff said!',
+            lat : 36.0800,
+            long : -115.1522
+        }
+    ];
 
-            var js_file = document.createElement('script');
-            js_file.type = 'text/javascript';
-            js_file.src = 'https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyC9Uc93DkXYoiGlPSymsQ1a2EQj75UVsxo&language=' + lang;
-            document.getElementsByTagName('head')[0].appendChild(js_file);
-          }
-        });
-      function initMap() {
-        infoWindow = new google.maps.InfoWindow({content: "Teste"});
-        bounds = new google.maps.LatLngBounds();
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 7,
-          center: {lat:-16.33, lng:-49.18},
-        });
+    //Angular App Module and Controller
+    angular.module('mapsApp', [])
+    .controller('MapCtrl', function ($scope) {
 
-        plotMarkers(-16.6921,-49.2677);
-        plotMarkers(-16.6062,-49.3315);
-        plotMarkers(-16.3362,-48.9534);
-      }
+        var mapOptions = {
+            zoom: 4,
+            center: new google.maps.LatLng(40.0000, -98.0000),
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        }
 
-  function plotMarkers(lat, long)
-  {
-    markers = [];
+        $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    var position = new google.maps.LatLng(lat, long);
-    var mark = new google.maps.Marker({
-          position: position,
-          label: "teste",
-          map: map,
-          animation: google.maps.Animation.DROP,
-          icon: {url: "target.png", labelOrigin: {x:0,y:0}}
+        $scope.markers = [];
 
-        })
-    bounds.extend(position);
-    map.fitBounds(bounds);
-    google.maps.event.addListener(mark, 'click', function(){
-        infoWindow.open(map, mark);
+        var infoWindow = new google.maps.InfoWindow();
+
+        var createMarker = function (info){
+
+            var marker = new google.maps.Marker({
+                map: $scope.map,
+                position: new google.maps.LatLng(info.lat, info.long),
+                title: info.city
+            });
+            marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+
+            google.maps.event.addListener(marker, 'click', function(){
+                infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
+                infoWindow.open($scope.map, marker);
+            });
+
+            $scope.markers.push(marker);
+
+        }
+
+        for (i = 0; i < cities.length; i++){
+            createMarker(cities[i]);
+        }
+
+        $scope.openInfoWindow = function(e, selectedMarker){
+            e.preventDefault();
+            google.maps.event.trigger(selectedMarker, 'click');
+        }
+
     });
-  }
-
