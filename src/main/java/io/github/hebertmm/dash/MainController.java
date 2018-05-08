@@ -1,8 +1,16 @@
 package io.github.***REMOVED***mm.dash;
 
 import io.github.***REMOVED***mm.dash.domain.*;
+import io.github.***REMOVED***mm.dash.message.CcsOutMessage;
+import io.github.***REMOVED***mm.dash.message.MessageMapper;
 import io.github.***REMOVED***mm.dash.util.geoutils.Geoutils;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smackx.gcm.packet.GcmPacketExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +22,9 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/")
@@ -30,6 +40,10 @@ public class MainController {
     private RemoteDeviceRepository remoteDeviceRepository;
     @Autowired
     private TargetRepository targetRepository;
+    @Autowired
+    @Qualifier("xmppOutbond")
+    private MessageChannel channel;
+
 
     private RestTemplate restTemplate;
 
@@ -147,5 +161,25 @@ public class MainController {
     @ResponseBody
     public List<Team> markersList(){
         return teamRepository.findAll();
+    }
+
+    @GetMapping(path="/sendMessage")
+    @ResponseBody
+    public String sendMessage(@RequestParam String message){
+        Map<String,String> map = new HashMap<>();
+        map.put("mensagem", "Esta e uma mensagem de texto");
+        CcsOutMessage outMessage = new CcsOutMessage("dFm4U_YygyE:APA91bH_q2MqVDBGfDhf-BZtjCpqd8C1YjVPLqBs4d32_DfwHvTXDh7irA-9p5B3-92FtmME47lQ27npaVIg7ZMbJYsI31X6nrETeA7r9bUcNjjdobW2VPcwKtoeqgs4lSVktR7oW-hE",
+                "0000100",map);
+        Map<String, String> notificationPayload = new HashMap<>();
+        notificationPayload.put("title", "Notificação teste");
+        notificationPayload.put("body", message);
+        outMessage.setNotificationPayload(notificationPayload);
+        org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
+        message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
+        org.springframework.messaging.Message<Message> msgFinal = new GenericMessage<Message>(message1);
+        if(channel.send(msgFinal))
+            return "yes";
+        else
+            return "no";
     }
 }

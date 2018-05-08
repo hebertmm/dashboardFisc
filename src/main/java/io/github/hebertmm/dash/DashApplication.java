@@ -9,15 +9,21 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+
+import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication
 public class DashApplication {
 	private static final Logger log = LoggerFactory.getLogger(DashApplication.class);
 
 	public static void main(String[] args) {
-		SpringApplication.run(DashApplication.class, args);
+		ApplicationContext applicationContext = SpringApplication.run(DashApplication.class, args);
+		for (String name : applicationContext.getBeanDefinitionNames()) {
+			System.out.println(name);
+		}
 	}
 
 
@@ -26,12 +32,5 @@ public class DashApplication {
 		return builder.build();
 	}
 
-	/*@Bean
-	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
-		return args -> {
-			Geoutils geo = new Geoutils();
-			GeoLocation loc = geo.geocodeForLocation("rua c-21 jardim america, goiania, go");
-			log.info("Lat: " + loc.getLat() + " Lng: "+ loc.getLng());
-		};
-	}*/
+
 }
