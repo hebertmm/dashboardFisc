@@ -8,7 +8,6 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smackx.gcm.packet.GcmPacketExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Controller;
@@ -58,7 +57,7 @@ public class MainController {
 
     @GetMapping(path="/addPerson")
     public ModelAndView addPerson(){
-        ModelAndView mv = new ModelAndView("/index.html");
+        ModelAndView mv = new ModelAndView("/addPerson.html");
         mv.addObject("person", new Person());
         return mv;
     }
@@ -123,7 +122,7 @@ public class MainController {
             return "Erro";
         else{
             personRepository.save(person);
-            return person.firstName;
+            return person.name;
         }
     }
     @GetMapping(path="/addRemoteDevice")

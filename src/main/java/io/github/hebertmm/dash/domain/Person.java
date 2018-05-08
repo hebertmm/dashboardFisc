@@ -6,13 +6,13 @@ public class Person {
     @Id
     public String id;
 
-    public String firstName;
+    public String name;
     public String lastName;
 
     public Person(){}
 
-    public Person(String firstName, String lastName) {
-        this.firstName = firstName;
+    public Person(String name, String lastName) {
+        this.name = name;
         this.lastName = lastName;
     }
 
@@ -24,12 +24,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLastName() {

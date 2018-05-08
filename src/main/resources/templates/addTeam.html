@@ -39,7 +39,7 @@
                         <select th:field="*{members[__${stat.index}__]}">
                             <option th:each="item : ${allPersons}"
                                     th:value="${item.id}"
-                                    th:text="${item.firstName}">Thymus Thymi</option>
+                                    th:text="${item.name}">Thymus Thymi</option>
                         </select>
                     </td>
 
