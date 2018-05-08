@@ -16,7 +16,7 @@
     <form th:object="${remoteDevice}" th:action="@{/addRemoteDevice}" method="post">
         <div class="form-group">
             <label for="telDesc">Descrição</label>
-            <input type="text" class="form-control" id="telDesc" th:field="*{desc}" aria-describedby="emailHelp" placeholder="Descrição">
+            <input type="text" class="form-control" id="telDesc" th:field="*{description}" aria-describedby="emailHelp" placeholder="Descrição">
         </div>
         <div class="form-group">
             <label for="number">Número</label>
@@ -26,11 +26,11 @@
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label for="lat">Latitude</label>
-                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{lastGeoLocation.coordinates[0]}" placeholder="Latitude">
+                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{lat}" placeholder="Latitude">
             </div>
             <div class="col-auto">
                 <label for="lng">Longitude</label>
-                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{lastGeoLocation.coordinates[1]}" placeholder="Longitude">
+                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{lng}" placeholder="Longitude">
             </div>
         </div>
         <div class="form-group">

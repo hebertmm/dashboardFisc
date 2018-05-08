@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 @RequestMapping(path = "/")
 public class MainController {
@@ -49,11 +50,11 @@ public class MainController {
     private RestTemplate restTemplate;
 
     @ModelAttribute("allPersons")
-    public List<Person> populateMembers(){
+    public Iterable<Person> populateMembers(){
         return this.personRepository.findAll();
     }
     @ModelAttribute("allRemotes")
-    public List<RemoteDevice> populateRemotes() {return this.remoteDeviceRepository.findAll();}
+    public Iterable<RemoteDevice> populateRemotes() {return this.remoteDeviceRepository.findAll();}
 
     @GetMapping(path="/addPerson")
     public ModelAndView addPerson(){
@@ -90,7 +91,7 @@ public class MainController {
             return "erro";
         else{
             teamRepository.save(team);
-            return team.getId();
+            return String.valueOf(team.getId());
         }
 
     }
@@ -103,7 +104,9 @@ public class MainController {
     @PostMapping(path="/addTarget", params = {"geocode"})
     public String geocodeAddress(Target target, BindingResult result, HttpServletRequest req){
         Geoutils geoutils = new Geoutils();
-        target.setGeoLocation(geoutils.geocodeForLocation(req.getParameter("address")));
+        Map<String,String> coord = geoutils.geocodeForLocation(req.getParameter("address"));
+        target.setLat(coord.get("lat"));
+        target.setLng(coord.get("lng"));
         return "addTarget";
     }
     @PostMapping(path="/addTarget", params = {"save"})
@@ -138,7 +141,7 @@ public class MainController {
             return "erro";
         else{
             remoteDeviceRepository.save(device);
-            return device.getId();
+            return String.valueOf(device.getId());
         }
 
     }
@@ -160,13 +163,13 @@ public class MainController {
     }
     @GetMapping(path="/markersList")
     @ResponseBody
-    public List<Team> markersList(){
+    public Iterable<Team> markersList(){
         return teamRepository.findAll();
     }
 
     @GetMapping(path="/targetsList")
     @ResponseBody
-    public List<Target> targetsList(){return targetRepository.findAll();}
+    public Iterable<Target> targetsList(){return targetRepository.findAll();}
 
 
     @GetMapping(path="/sendMessage")
@@ -190,18 +193,19 @@ public class MainController {
     }
     @PutMapping(path="/updateRemoteDevice/{id}")
     @ResponseBody
-    public RemoteDevice updateRemoteDevice(@PathVariable(value = "id") String id,
+    public RemoteDevice updateRemoteDevice(@PathVariable(value = "id") Integer id,
                                            @Valid @RequestBody RemoteDevice device){
         RemoteDevice remoteDevice = remoteDeviceRepository.findById(id)
                 .orElseThrow(() -> new ResourceAccessException("note"));
         remoteDevice.setMessagingId(device.getMessagingId());
-        remoteDevice.setLastGeoLocation(device.getLastGeoLocation());
+        remoteDevice.setLat(device.getLat());
+        remoteDevice.setLng(device.getLng());
         remoteDevice.setStatus(device.getStatus());
         return remoteDeviceRepository.save(remoteDevice);
     }
     @GetMapping(path="/remoteDevice/{id}")
     @ResponseBody
-    public RemoteDevice queryRemoteDevice(@PathVariable String id){
+    public RemoteDevice queryRemoteDevice(@PathVariable Integer id){
         return remoteDeviceRepository.findById(id)
                 .orElseThrow(() -> new ResourceAccessException("note"));
     }

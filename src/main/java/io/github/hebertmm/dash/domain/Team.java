@@ -1,21 +1,27 @@
 package io.github.***REMOVED***mm.dash.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Team {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    @OneToMany
     private List<Person> members = new ArrayList<>();
     private String description;
+    @OneToOne
     private RemoteDevice remoteDevice;
-    private GeoLocation localAtual;
+    @OneToOne
     private Target objetivo;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

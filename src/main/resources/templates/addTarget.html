@@ -15,8 +15,8 @@
 <div class="container">
     <form action="#" th:object="${target}" th:action="@{/addTarget}" method="post">
         <div class="form-group">
-            <label for="desc">Descrição</label>
-            <input type="text" class="form-control" id="desc" placeholder="Digite a descrição do Objetivo" th:field="*{description}">
+            <label for="description">Descrição</label>
+            <input type="text" class="form-control" id="description" placeholder="Digite a descrição do Objetivo" th:field="*{description}">
         </div>
         <div></div>
 
@@ -30,11 +30,11 @@
             </div>
             <div class="col-auto">
 
-                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{geoLocation.coordinates[0]}" placeholder="Latitude">
+                <input type="number" step="any" class="form-control mb-2" id="lat" th:field="*{lat}" placeholder="Latitude">
             </div>
             <div class="col-auto">
 
-                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{geoLocation.coordinates[1]}" placeholder="Longitude">
+                <input type="number" step="any" class="form-control mb-2" id="lng" th:field="*{lng}" placeholder="Longitude">
             </div>
         </div>
         <button type="submit" name="save" class="btn btn-primary">Salvar</button>

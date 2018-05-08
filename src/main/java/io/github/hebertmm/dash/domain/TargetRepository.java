@@ -1,6 +1,8 @@
 package io.github.***REMOVED***mm.dash.domain;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface TargetRepository extends MongoRepository<Target, String> {
+import javax.persistence.Entity;
+
+public interface TargetRepository extends CrudRepository<Target, Integer> {
 }

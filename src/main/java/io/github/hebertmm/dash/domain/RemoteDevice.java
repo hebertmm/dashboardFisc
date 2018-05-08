@@ -1,28 +1,38 @@
 package io.github.***REMOVED***mm.dash.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class RemoteDevice {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
     private String validationCode;
-    private String desc;
+    private String description;
     private String number;
     private String messagingId;
-    private GeoLocation lastGeoLocation;
+    private String lat;
+    private String lng;
     private String status;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getNumber() {
@@ -41,12 +51,28 @@ public class RemoteDevice {
         this.messagingId = messagingId;
     }
 
-    public GeoLocation getLastGeoLocation() {
-        return lastGeoLocation;
+    public String getValidationCode() {
+        return validationCode;
     }
 
-    public void setLastGeoLocation(GeoLocation lastGeoLocation) {
-        this.lastGeoLocation = lastGeoLocation;
+    public void setValidationCode(String validationCode) {
+        this.validationCode = validationCode;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 
     public String getStatus() {

@@ -1,10 +1,15 @@
 package io.github.***REMOVED***mm.dash.domain;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
+@Entity
 public class Person {
     @Id
-    public String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer id;
 
     public String name;
     public String lastName;
@@ -16,11 +21,11 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class Geoutils {
@@ -26,13 +28,11 @@ public class Geoutils {
         log.info(url);
         return restTemplate.getForObject(url, Geocode.class);
     }
-    public GeoLocation geocodeForLocation(String address){
+    public Map<String, String> geocodeForLocation(String address){
         Geocode geocode = geocodeAddress(address);
-        GeoLocation location = new GeoLocation();
-        location.setCoordinates(new String[]{
-                geocode.getResults()[0].getGeometry().getLocation().getLat(),
-                geocode.getResults()[0].getGeometry().getLocation().getLng()
-        });
+        Map location = new HashMap();
+        location.put("lat",geocode.getResults()[0].getGeometry().getLocation().getLat());
+        location.put("lng",geocode.getResults()[0].getGeometry().getLocation().getLng());
         return location;
     }
 }

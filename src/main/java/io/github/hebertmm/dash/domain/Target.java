@@ -1,20 +1,27 @@
 package io.github.***REMOVED***mm.dash.domain;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
+@Entity
 public class Target {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
     private String address;
-    private GeoLocation geoLocation;
+    private String lat;
+    private String lng;
     private String description;
     private String type;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -26,12 +33,20 @@ public class Target {
         this.address = address;
     }
 
-    public GeoLocation getGeoLocation() {
-        return geoLocation;
+    public String getLat() {
+        return lat;
     }
 
-    public void setGeoLocation(GeoLocation geoLocation) {
-        this.geoLocation = geoLocation;
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 
     public String getDescription() {
