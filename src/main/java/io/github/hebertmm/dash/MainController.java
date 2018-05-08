@@ -14,6 +14,7 @@ import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
@@ -40,6 +41,7 @@ public class MainController {
     private RemoteDeviceRepository remoteDeviceRepository;
     @Autowired
     private TargetRepository targetRepository;
+
     @Autowired
     @Qualifier("xmppOutbond")
     private MessageChannel channel;
@@ -163,6 +165,11 @@ public class MainController {
         return teamRepository.findAll();
     }
 
+    @GetMapping(path="/targetsList")
+    @ResponseBody
+    public List<Target> targetsList(){return targetRepository.findAll();}
+
+
     @GetMapping(path="/sendMessage")
     @ResponseBody
     public String sendMessage(@RequestParam String message){
@@ -181,5 +188,22 @@ public class MainController {
             return "yes";
         else
             return "no";
+    }
+    @PutMapping(path="/updateRemoteDevice/{id}")
+    @ResponseBody
+    public RemoteDevice updateRemoteDevice(@PathVariable(value = "id") String id,
+                                           @Valid @RequestBody RemoteDevice device){
+        RemoteDevice remoteDevice = remoteDeviceRepository.findById(id)
+                .orElseThrow(() -> new ResourceAccessException("note"));
+        remoteDevice.setMessagingId(device.getMessagingId());
+        remoteDevice.setLastGeoLocation(device.getLastGeoLocation());
+        remoteDevice.setStatus(device.getStatus());
+        return remoteDeviceRepository.save(remoteDevice);
+    }
+    @GetMapping(path="/remoteDevice/{id}")
+    @ResponseBody
+    public RemoteDevice queryRemoteDevice(@PathVariable String id){
+        return remoteDeviceRepository.findById(id)
+                .orElseThrow(() -> new ResourceAccessException("note"));
     }
 }

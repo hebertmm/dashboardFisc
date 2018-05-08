@@ -21,6 +21,7 @@ public class AppConfiguration {
 		XMPPTCPConnectionConfiguration connectionConfiguration = XMPPTCPConnectionConfiguration.builder()
 				.setXmppDomain("io.github.***REMOVED***mm")
 				.setHost("fcm-xmpp.googleapis.com").setPort(5235)
+				.setConnectTimeout(10000)
 				.setUsernameAndPassword("***REMOVED***@gcm.googleapis.com","***REMOVED***")
 				.setSecurityMode(SecurityMode.ifpossible)
 				.setSendPresence(false)
@@ -30,6 +31,7 @@ public class AppConfiguration {
 		XmppConnectionFactoryBean connectionFactoryBean = new XmppConnectionFactoryBean();
 		connectionFactoryBean.setConnectionConfiguration(connectionConfiguration);
 		connectionFactoryBean.setSubscriptionMode(null);
+		connectionFactoryBean.setAutoStartup(false); //retirar em produção
 		Roster.setRosterLoadedAtLoginDefault(false);
 
 		return connectionFactoryBean;

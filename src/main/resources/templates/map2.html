@@ -27,18 +27,32 @@
     <script src="http://maps.google.com/maps/api/js"></script>
     <script src="ng-map.min.js"></script>
     <script src="map2.js"></script>
-    <title>Hello, world!</title>
+    <title>Mapa</title>
 </head>
 <body>
 
     <div ng-app="myApp" class="map" ng-controller="myCtrl">
         <map center="-16,-49" zoom="6" style="width:100%; height:900px">
             <marker ng-repeat="team in teams"
+                    id="{{team.id}}"
                     position={{team.remoteDevice.lastGeoLocation.coordinates}}
-                    icon="group.png">
+                    icon="group.png"
+                    on-click="showDetail(team)">
             </marker>
+            <marker ng-repeat="target in targets"
+                    id="{{target.id}}"
+                    position="{{target.geoLocation.coordinates}}"
+                    icon="office.png">
+            </marker>
+            <info-window id="foo-iw">
+                <div >
+                    {{description}}<br/>
+
+
+                </div>
+            </info-window>
         </map>
-        <input ng-model="marker">
+
     </div>
 
 

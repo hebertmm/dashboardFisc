@@ -2,10 +2,12 @@ package io.github.***REMOVED***mm.dash.domain;
 
 public class RemoteDevice {
     private String id;
+    private String validationCode;
     private String desc;
     private String number;
     private String messagingId;
     private GeoLocation lastGeoLocation;
+    private String status;
 
     public String getId() {
         return id;
@@ -45,5 +47,13 @@ public class RemoteDevice {
 
     public void setLastGeoLocation(GeoLocation lastGeoLocation) {
         this.lastGeoLocation = lastGeoLocation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

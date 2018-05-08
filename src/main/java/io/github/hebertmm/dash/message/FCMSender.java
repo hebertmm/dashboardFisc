@@ -20,7 +20,7 @@ public class FCMSender implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         log.info("teste");
-        ApplicationContext context = new ClassPathXmlApplicationContext("integration.xml");
+        /*ApplicationContext context = new ClassPathXmlApplicationContext("integration.xml");
         MessageChannel channel = context.getBean("xmppOutbond", MessageChannel.class);
         Map<String,String> map = new HashMap<>();
         map.put("mensagem", "Esta e uma mensagem de texto");
@@ -33,8 +33,8 @@ public class FCMSender implements CommandLineRunner {
         org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
         message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
         Message<org.jivesoftware.smack.packet.Message> msgFinal = new GenericMessage<org.jivesoftware.smack.packet.Message>(message1);
-
+        */
         // send the message to the inputChannel
-        final boolean send = channel.send(msgFinal);
+        //final boolean send = channel.send(msgFinal);
     }
 }
