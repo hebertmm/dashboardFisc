@@ -1,5 +1,5 @@
 var app = angular.module('myApp', ['ngMap']);
-        app.controller('myCtrl', function($scope, $http, NgMap) {
+        app.controller('myCtrl', function($scope, $http, $interval, NgMap) {
             NgMap.getMap().then(function(map) {
                 console.log('map', map);
                 this.map = map;
@@ -13,14 +13,18 @@ var app = angular.module('myApp', ['ngMap']);
 
             });
             $scope.description = "";
+            $scope.status = "";
             $scope.showDetail = function(e, item) {
-                //alert(item.description);
+                alert(item.remoteDevice.status);
                 $scope.description = item.description;
-                this.map.showInfoWindow('foo-iw', item.id);
+                $scope.status = item.remoteDevice.status;
+                this.map.showInfoWindow('foo-iw', 'a'+item.id);
               };
 
               $scope.hideDetail = function() {
                 this.map.hideInfoWindow('foo-iw');
               };
-
+              $interval(function(){
+                $http.get("markersList").then(function(response){$scope.teams = response.data;});
+              },10000);
         });

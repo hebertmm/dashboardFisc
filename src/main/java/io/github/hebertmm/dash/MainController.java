@@ -178,7 +178,7 @@ public class MainController {
         Map<String,String> map = new HashMap<>();
         map.put("mensagem", "Esta e uma mensagem de texto");
         CcsOutMessage outMessage = new CcsOutMessage("dFm4U_YygyE:APA91bH_q2MqVDBGfDhf-BZtjCpqd8C1YjVPLqBs4d32_DfwHvTXDh7irA-9p5B3-92FtmME47lQ27npaVIg7ZMbJYsI31X6nrETeA7r9bUcNjjdobW2VPcwKtoeqgs4lSVktR7oW-hE",
-                "0000100",map);
+                "0000105",map);
         Map<String, String> notificationPayload = new HashMap<>();
         notificationPayload.put("title", "Notificação teste");
         notificationPayload.put("body", message);
