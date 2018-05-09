@@ -58,6 +58,14 @@
                         th:text="${item.number}">62999991234</option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="target">Objetivo</label>
+            <select id="target" th:field="*{objetivo}">
+                <option th:each="item : ${allTargets}"
+                        th:value="${item.id}"
+                        th:text="${item.description}">Teste</option>
+            </select>
+        </div>
         <button type="submit" name="saveTeam" class="btn btn-primary">Salvar</button>
     </form>
 </div>

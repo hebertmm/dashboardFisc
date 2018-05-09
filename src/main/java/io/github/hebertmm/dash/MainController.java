@@ -55,6 +55,8 @@ public class MainController {
     }
     @ModelAttribute("allRemotes")
     public Iterable<RemoteDevice> populateRemotes() {return this.remoteDeviceRepository.findAll();}
+    @ModelAttribute("allTargets")
+    public Iterable<Target> populateTargets() {return this.targetRepository.findAll();}
 
     @GetMapping(path="/addPerson")
     public ModelAndView addPerson(){
@@ -94,6 +96,12 @@ public class MainController {
             return String.valueOf(team.getId());
         }
 
+    }
+    @GetMapping(path="/listTeams")
+    public ModelAndView listTeams(){
+        ModelAndView mv = new ModelAndView("/listTeam.html");
+        mv.addObject("teams",teamRepository.findAll());
+        return mv;
     }
     @GetMapping(path="/addTarget")
     public ModelAndView addTarget(){
@@ -145,18 +153,7 @@ public class MainController {
         }
 
     }
-    @GetMapping(path="/map")
-    public ModelAndView showMap(){
-        List<GeoLocation> loc = new ArrayList<>();
-        loc.add(new GeoLocation("POINT", "-16.6921","-49.2672"));
-        loc.add(new GeoLocation("POINT", "-16.5921","-49.2697"));
-        loc.add(new GeoLocation("POINT", "-16.6921","-48.2677"));
-        loc.add(new GeoLocation("POINT", "-16.621","-49.1674"));
-        loc.add(new GeoLocation("POINT", "-16.612","-49.05677"));
-        ModelAndView mv = new ModelAndView("map.html");
-        mv.addObject("point",loc);
-        return mv;
-    }
+
     @GetMapping(path="/map2")
     public ModelAndView showMap2(){
         return new ModelAndView("map2.html");

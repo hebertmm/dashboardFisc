@@ -8,24 +8,28 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Lista</title>
+    <title>Equipes de Fiscalização</title>
   </head>
   <body>
+    <div th:replace="fragments/main :: header"></div>
     <div class="row">
         <div class="col">
           <table class="table" id="tbl">
             <thead>
-              <th scope="col">Nome</th>
-              <th scope="col">Tipo</th>
+              <th scope="col">Id</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Fiscais</th>
+              <th scope="col">Objetivo</th>
               <th scope="col">Status</th>
-              <th scope="col">Opções</th>
+              <th scope="col">Ações</th>
             </thead>
             <tbody>
-                <tr th:each="item : ${itens}">
-                    <td th:text="${item.id}">Teste</td>
-                    <td th:text="${item.patrim}">Teste</td>
-                    <td th:text="${item.descricao}">teste</td>
-                    <td th:text="${item.endereco.nome}">Teste</td>
+                <tr th:each="team : ${teams}">
+                    <td th:text="${team.id}">1223</td>
+                    <td th:text="${team.description}">Equipe 1</td>
+                    <td ><ul><li th:each="member : ${team.members}" th:text="${member.name}">Hebert</li></ul></td>
+                    <td th:text="${team.objetivo.description}">empresa x</td>
+                    <td th:text="${team.remoteDevice.status}">Encerrada</td>
                     
                 </tr>
             </tbody>

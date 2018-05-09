@@ -30,31 +30,41 @@
     <title>Mapa</title>
 </head>
 <body>
-
-    <div ng-app="myApp" class="map" ng-controller="myCtrl">
-        <map center="-16,-49" zoom="6" style="width:100%; height:900px">
-            <marker ng-repeat="team in teams"
-                    id="{{'a'+team.id}}"
-                    position="{{team.remoteDevice.lat + ',' + team.remoteDevice.lng}}"
-                    icon="group.png"
-                    on-click="showDetail(team)">
-            </marker>
-            <marker ng-repeat="target in targets"
-                    id="{{target.id}}"
-                    position="{{target.lat + ',' + target.lng}}"
-                    icon="office.png">
-            </marker>
-            <info-window id="foo-iw">
-                <div >
-                    {{description}}<br/>
-                    Status: {{status}}
-
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-9">
+                <div ng-app="myApp" class="map" ng-controller="myCtrl">
+                    <map center="-16,-49" zoom="6" style="width:100%; height:100%">
+                        <marker ng-repeat="team in teams"
+                            id="{{'a'+team.id}}"
+                            position="{{team.remoteDevice.lat + ',' + team.remoteDevice.lng}}"
+                            icon="{{getIcon(team.remoteDevice.status)}}"
+                            on-click="showDetail(team)">
+                        </marker>
+                        <marker ng-repeat="target in targets"
+                            id="{{target.id}}"
+                            position="{{target.lat + ',' + target.lng}}"
+                            icon="office.png">
+                        </marker>
+                        <info-window id="foo-iw">
+                            <div >
+                                {{description}}<br/>
+                                Status: {{status}}
+                            </div>
+                        </info-window>
+                    </map>
                 </div>
-            </info-window>
-        </map>
-
+            </div>
+            <div class="col-lg-3">
+                <div >
+                    <img src="/anatela.png">
+                </div>
+                <div >
+                    Mensagem
+                </div>
+            </div>
+        </div>
     </div>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
