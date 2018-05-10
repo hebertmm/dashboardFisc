@@ -12,6 +12,9 @@ var app = angular.module('myApp', ['ngMap']);
                         $scope.targets = response.data;
 
             });
+            $http.get("messageList").then(function(response){
+                        $scope.messages = response.data;
+            });
             $scope.description = "";
             $scope.status = "";
             $scope.iconTeam = {url: 'group.png', labelOrigin:{x:0,y:0}};
@@ -47,5 +50,6 @@ var app = angular.module('myApp', ['ngMap']);
               };
               $interval(function(){
                 $http.get("markersList").then(function(response){$scope.teams = response.data;});
+                $http.get("messageList").then(function(response){$scope.messages = response.data;});
               },10000);
         });

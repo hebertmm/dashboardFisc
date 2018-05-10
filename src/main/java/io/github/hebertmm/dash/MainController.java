@@ -21,10 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -32,6 +29,7 @@ import java.util.Map;
 public class MainController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private Random random = new Random();
 
     @Autowired
     private PersonRepository personRepository;
@@ -41,6 +39,8 @@ public class MainController {
     private RemoteDeviceRepository remoteDeviceRepository;
     @Autowired
     private TargetRepository targetRepository;
+    @Autowired
+    private MyMessageRepository myMessageRepository;
 
     @Autowired
     @Qualifier("xmppOutbond")
@@ -158,6 +158,10 @@ public class MainController {
     public ModelAndView showMap2(){
         return new ModelAndView("map2.html");
     }
+    @GetMapping(path = "/chat")
+    public ModelAndView showChatBox(){
+        return new ModelAndView("chatBox.html");
+    }
     @GetMapping(path="/markersList")
     @ResponseBody
     public Iterable<Team> markersList(){
@@ -168,25 +172,48 @@ public class MainController {
     @ResponseBody
     public Iterable<Target> targetsList(){return targetRepository.findAll();}
 
+    @GetMapping(path="/messageList")
+    @ResponseBody
+    public Iterable<MyMessage> messageList(){return myMessageRepository.findAll();}
+
 
     @GetMapping(path="/sendMessage")
     @ResponseBody
-    public String sendMessage(@RequestParam String message){
-        Map<String,String> map = new HashMap<>();
-        map.put("mensagem", "Esta e uma mensagem de texto");
-        CcsOutMessage outMessage = new CcsOutMessage("dFm4U_YygyE:APA91bH_q2MqVDBGfDhf-BZtjCpqd8C1YjVPLqBs4d32_DfwHvTXDh7irA-9p5B3-92FtmME47lQ27npaVIg7ZMbJYsI31X6nrETeA7r9bUcNjjdobW2VPcwKtoeqgs4lSVktR7oW-hE",
-                "0000105",map);
-        Map<String, String> notificationPayload = new HashMap<>();
-        notificationPayload.put("title", "Notificação teste");
-        notificationPayload.put("body", message);
-        outMessage.setNotificationPayload(notificationPayload);
-        org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
-        message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
-        org.springframework.messaging.Message<Message> msgFinal = new GenericMessage<Message>(message1);
-        if(channel.send(msgFinal))
-            return "yes";
-        else
+    public String sendMessage(@RequestParam String message, @RequestParam Integer teamId){
+        try{
+            Team t = teamRepository.findById(teamId).orElseThrow(()-> new ResourceAccessException("Team"));
+            String destId = t.getRemoteDevice().getMessagingId();
+            if(destId == null || destId==""){
+                return "no";
+            }
+            Integer id = random.nextInt(9999);
+            Map<String,String> map = new HashMap<>();
+            map.put("message", "Esta e uma mensagem de texto");
+            CcsOutMessage outMessage = new CcsOutMessage(destId,id.toString(),map);
+            Map<String, String> notificationPayload = new HashMap<>();
+            notificationPayload.put("title", "Mensagem do Centro de Controle");
+            notificationPayload.put("body", message);
+            outMessage.setNotificationPayload(notificationPayload);
+            org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
+            message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
+            org.springframework.messaging.Message<Message> msgFinal = new GenericMessage<Message>(message1);
+            if(channel.send(msgFinal)) {
+                MyMessage msg = new MyMessage();
+                msg.setTeam(t);
+                msg.setType("sent");
+                msg.setText(message);
+                msg.setFirebaseId(id);
+                msg.setTimestamp(msgFinal.getHeaders().getTimestamp());
+                myMessageRepository.save(msg);
+                return "yes";
+            }
+            else
+                return "no";
+        }catch(ResourceAccessException e){
+            e.printStackTrace();
             return "no";
+        }
+
     }
     @PutMapping(path="/updateRemoteDevice/{id}")
     @ResponseBody

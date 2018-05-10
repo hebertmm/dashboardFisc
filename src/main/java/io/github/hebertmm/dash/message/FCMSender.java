@@ -30,9 +30,9 @@ public class FCMSender implements CommandLineRunner {
         notificationPayload.put("title", "Notificação teste");
         notificationPayload.put("body", "Este é o corpo da mensagem de notificação");
         outMessage.setNotificationPayload(notificationPayload);
-        org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
+        org.jivesoftware.smack.packet.MyMessage message1 = new org.jivesoftware.smack.packet.MyMessage();
         message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
-        Message<org.jivesoftware.smack.packet.Message> msgFinal = new GenericMessage<org.jivesoftware.smack.packet.Message>(message1);
+        MyMessage<org.jivesoftware.smack.packet.MyMessage> msgFinal = new GenericMessage<org.jivesoftware.smack.packet.MyMessage>(message1);
         */
         // send the message to the inputChannel
         //final boolean send = channel.send(msgFinal);

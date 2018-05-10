@@ -31,7 +31,7 @@ public class AppConfiguration {
 		XmppConnectionFactoryBean connectionFactoryBean = new XmppConnectionFactoryBean();
 		connectionFactoryBean.setConnectionConfiguration(connectionConfiguration);
 		connectionFactoryBean.setSubscriptionMode(null);
-		connectionFactoryBean.setAutoStartup(false); //retirar em produção
+		connectionFactoryBean.setAutoStartup(true); //retirar em produção
 		Roster.setRosterLoadedAtLoginDefault(false);
 
 		return connectionFactoryBean;

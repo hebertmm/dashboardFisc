@@ -3,14 +3,19 @@ package io.github.***REMOVED***mm.dash.domain;
 import javax.persistence.*;
 
 @Entity
-public class Message {
+public class MyMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
+    private Integer firebaseId;
     @ManyToOne
     private Team team;
     private String text;
     private String type;
+    private Long timestamp;
+
+
+    //private final String SEND = "send";
 
     public Integer getId() {
         return id;
@@ -42,5 +47,21 @@ public class Message {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(Integer firebaseId) {
+        this.firebaseId = firebaseId;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }
