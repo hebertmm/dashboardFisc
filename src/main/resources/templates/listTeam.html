@@ -19,6 +19,7 @@
               <th scope="col">Id</th>
               <th scope="col">Descrição</th>
               <th scope="col">Fiscais</th>
+              <th scope="col">Telefone</th>
               <th scope="col">Objetivo</th>
               <th scope="col">Status</th>
               <th scope="col">Ações</th>
@@ -28,9 +29,10 @@
                     <td th:text="${team.id}">1223</td>
                     <td th:text="${team.description}">Equipe 1</td>
                     <td ><ul><li th:each="member : ${team.members}" th:text="${member.name}">Hebert</li></ul></td>
+                    <td th:text="${team.remoteDevice.number}">999995858</td>
                     <td th:text="${team.objetivo.description}">empresa x</td>
                     <td th:text="${team.remoteDevice.status}">Encerrada</td>
-                    
+                    <td><a href="#"><img src="trash.png"></a> </td>
                 </tr>
             </tbody>
           </table>

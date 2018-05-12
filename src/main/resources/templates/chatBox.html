@@ -32,7 +32,7 @@
         }
 
         /* Style images */
-        .container span.left {
+        .container span.received {
             float: left;
             max-width: 60px;
             width: 100%;
@@ -41,7 +41,7 @@
         }
 
         /* Style the right image */
-        .container span.right {
+        .container span.sent {
             float: right;
             margin-left: 20px;
             margin-right:0;
@@ -66,8 +66,8 @@
 </head>
 <body>
     <div ng-app="chatBox" class="container-fluid" ng-controller="boxCtrl">
-        <div class="container" ng-repeat="m in messages">
-            <span ng-if="isReceived(m)">{{m.team.description}}</span>
+        <div class="container" ng-repeat="m in messages" >
+            <span ng-if="isReceived(m)" ng-class="received">{{m.team.description}}</span>
             <p>{{m.text}}</p>
 
         </div>

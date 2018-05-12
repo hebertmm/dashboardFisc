@@ -103,6 +103,12 @@ public class MainController {
         mv.addObject("teams",teamRepository.findAll());
         return mv;
     }
+    @GetMapping(path="/delTeam")
+    public ModelAndView delTeam(@RequestParam Integer teamId){
+        Team t = teamRepository.findById(teamId).orElseThrow(() -> new ResourceAccessException("team"));
+        teamRepository.delete(t);
+        return new ModelAndView("/listTeam.html");
+    }
     @GetMapping(path="/addTarget")
     public ModelAndView addTarget(){
         ModelAndView mv = new ModelAndView("/addTarget.html");
@@ -233,4 +239,5 @@ public class MainController {
         return remoteDeviceRepository.findById(id)
                 .orElseThrow(() -> new ResourceAccessException("note"));
     }
+
 }
