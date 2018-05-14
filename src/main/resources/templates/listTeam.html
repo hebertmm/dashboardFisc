@@ -28,7 +28,7 @@
                 <tr th:each="team : ${teams}">
                     <td th:text="${team.id}">1223</td>
                     <td th:text="${team.description}">Equipe 1</td>
-                    <td ><ul><li th:each="member : ${team.members}" th:text="${member.name}">Hebert</li></ul></td>
+                    <td ><ul class="list-group"><li class="list-group-item" th:each="member : ${team.members}" th:text="${member.name}">Hebert</li></ul></td>
                     <td th:text="${team.remoteDevice.number}">999995858</td>
                     <td th:text="${team.objetivo.description}">empresa x</td>
                     <td th:text="${team.remoteDevice.status}">Encerrada</td>

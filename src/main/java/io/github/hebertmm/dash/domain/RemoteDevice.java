@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class RemoteDevice {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String validationCode;

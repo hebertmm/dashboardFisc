@@ -74,7 +74,6 @@ public class MainController {
     @PostMapping(path="/addTeam", params = {"addMember"})
     public String addMember(Team team, BindingResult result){
         team.addMember(new Person());
-        log.info("Add Member---");
         return "addTeam";
     }
     @PostMapping(path="/addTeam", params = {"removeMember"})
@@ -166,7 +165,9 @@ public class MainController {
     }
     @GetMapping(path = "/chat")
     public ModelAndView showChatBox(){
-        return new ModelAndView("chatBox.html");
+        ModelAndView mv = new ModelAndView("chatBox.html");
+        mv.addObject("teams", teamRepository.findAll());
+        return mv;
     }
     @GetMapping(path="/markersList")
     @ResponseBody
@@ -194,12 +195,8 @@ public class MainController {
             }
             Integer id = random.nextInt(9999);
             Map<String,String> map = new HashMap<>();
-            map.put("message", "Esta e uma mensagem de texto");
+            map.put("message", message);
             CcsOutMessage outMessage = new CcsOutMessage(destId,id.toString(),map);
-            Map<String, String> notificationPayload = new HashMap<>();
-            notificationPayload.put("title", "Mensagem do Centro de Controle");
-            notificationPayload.put("body", message);
-            outMessage.setNotificationPayload(notificationPayload);
             org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
             message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
             org.springframework.messaging.Message<Message> msgFinal = new GenericMessage<Message>(message1);

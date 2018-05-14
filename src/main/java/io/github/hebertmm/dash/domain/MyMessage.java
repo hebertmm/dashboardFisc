@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class MyMessage {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer firebaseId;
     @ManyToOne
