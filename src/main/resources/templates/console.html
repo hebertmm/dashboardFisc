@@ -10,31 +10,26 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
 <body>
-<div>
-    <iframe src="chat"></iframe>
-    <form action="#" th:action="@{/sendMessage}" method="get">
-        <fieldset>
-            <legend>Enviar Mensagem</legend>
-            <div class="form-group">
-                <label for="team">Destinatário</label>
-                <select id="team" name="teamId">
-                    <option th:each="team : ${teams}"
-                            th:value="${team.id}"
-                            th:text="${team.description}">Teste</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <textarea  name="message" id="msg" row="4" cols="50" placeholder="Digite a mensagem"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </fieldset>
-    </form>
+<div ng-app="console" ng-controller="consoleCtrl">
+    <label for="selTeam">Equipe:</label>
+    <select id="selTeam" ng-model="selectedTeam" ng-options="team.description for team in teams"></select>
+    <label for="lat">Latitude:</label>
+    <input type="text" id="lat" ng-model="selectedTeam.remoteDevice.lat">
+    <label for="lng">Longitude:</label>
+    <input type="text" id="lng" ng-model="selectedTeam.remoteDevice.lng">
+    <label for="stat">Status</label>
+    <select id="stat" ng-model="selectedTeam.remoteDevice.status">
+        <option>NAO_INICIADO</option>
+        <option>DESLOCAMENTO</option>
+        <option>AÇÃO</option>
+        <option>ENCERRADA</option>
+    </select>
+    <button ng-click="update(selectedTeam.remoteDevice.id, selectedTeam.remoteDevice)">Enviar</button>
 </div>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="console.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
