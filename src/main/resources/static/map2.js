@@ -32,19 +32,22 @@ var app = angular.module('myApp', ['ngMap']);
               $scope.getIcon = function(status){
                 switch(status){
                     case "NAO_INICIADO":
-                        return "group.png";
+                        return "groupGray.png";
                         break;
                     case "DESLOCAMENTO":
                         return "groupYellow.png";
                         break;
                     case "AÇÃO":
-                        return "groupRed.png";
-                        break;
-                    case "ENCERRADA":
                         return "groupGreen.png";
                         break;
+                    case "ENCERRADA":
+                        return "groupBlue.png";
+                        break;
+                    case "EM_ATENÇÃO":
+                        return "groupRed.png";
+                        break;
                     default:
-                        return "group.png"
+                        return "groupGray.png"
 
                 }
               };

@@ -60,13 +60,13 @@ public class MainController {
 
     @GetMapping(path="/addPerson")
     public ModelAndView addPerson(){
-        ModelAndView mv = new ModelAndView("/addPerson.html");
+        ModelAndView mv = new ModelAndView("addPerson.html");
         mv.addObject("person", new Person());
         return mv;
     }
     @GetMapping(path="/addTeam")
     public ModelAndView addTeam(){
-        ModelAndView mv = new ModelAndView("/addTeam.html");
+        ModelAndView mv = new ModelAndView("addTeam.html");
         mv.addObject("persons", personRepository.findAll());
         mv.addObject("team", new Team());
         return mv;
@@ -98,7 +98,7 @@ public class MainController {
     }
     @GetMapping(path="/listTeams")
     public ModelAndView listTeams(){
-        ModelAndView mv = new ModelAndView("/listTeam.html");
+        ModelAndView mv = new ModelAndView("listTeam.html");
         mv.addObject("teams",teamRepository.findAll());
         return mv;
     }
@@ -106,11 +106,11 @@ public class MainController {
     public ModelAndView delTeam(@RequestParam Integer teamId){
         Team t = teamRepository.findById(teamId).orElseThrow(() -> new ResourceAccessException("team"));
         teamRepository.delete(t);
-        return new ModelAndView("/listTeam.html");
+        return new ModelAndView("listTeam.html");
     }
     @GetMapping(path="/addTarget")
     public ModelAndView addTarget(){
-        ModelAndView mv = new ModelAndView("/addTarget.html");
+        ModelAndView mv = new ModelAndView("addTarget.html");
         mv.addObject("target", new Target());
         return mv;
     }
@@ -241,17 +241,17 @@ public class MainController {
     @ResponseBody
     public RemoteDevice queryRemoteDevice(@PathVariable Integer id){
         return remoteDeviceRepository.findById(id)
-                .orElseThrow(() -> new ResourceAccessException("note"));
+                .orElseThrow(() -> new ResourceAccessException("remote"));
     }
 
     @GetMapping(path="/console")
     public ModelAndView showConsole(){
-        return (new ModelAndView("/console.html"));
+        return (new ModelAndView("console.html"));
     }
 
     @GetMapping(path="/messageConsole")
     public ModelAndView showMessageConsole(){
-        ModelAndView mv = new ModelAndView("/messageConsole.html");
+        ModelAndView mv = new ModelAndView("messageConsole.html");
         mv.addObject("teams", teamRepository.findAll());
         return mv;
     }
