@@ -255,5 +255,14 @@ public class MainController {
         mv.addObject("teams", teamRepository.findAll());
         return mv;
     }
+    @GetMapping(path = "/idByNumber")
+    @ResponseBody
+    public Integer findRemoteId(@RequestParam String number){
+        RemoteDevice remoteDevice = remoteDeviceRepository.findByNumber(number);
+        if(remoteDevice != null)
+            return remoteDevice.getId();
+        else
+            return 0;
+    }
 
 }
