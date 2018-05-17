@@ -37,15 +37,14 @@
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="http://maps.google.com/maps/api/js"></script>
     <script src="chatBox.js"></script>
-    <title>Mapa</title>
+    <title>ChatBox</title>
 </head>
 <body>
     <div ng-app="chatBox" class="container-fluid" ng-controller="boxCtrl">
         <div ng-class="m.type" ng-repeat="m in messages" >
             <span ng-if="isReceived(m)" ><strong>{{m.team.description + ": "}}</strong> {{m.text}}</span>
-            <span ng-if="!isReceived(m)"><strong>Centro de controle: </strong>{{m.text}}</span>
+            <span ng-if="!isReceived(m)"><strong>Sala de Situação: </strong>{{m.text}}</span>
 
         </div>
 

@@ -13,6 +13,7 @@
 </head>
 <body>
 <div class="container">
+    <div th:replace="fragments/main :: menu"></div>
     <form action="#" th:object="${target}" th:action="@{/addTarget}" method="post">
         <div class="form-group">
             <label for="description">Descrição</label>

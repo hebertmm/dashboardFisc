@@ -18,6 +18,7 @@ var app = angular.module('myApp', ['ngMap']);
             $scope.description = "";
             $scope.status = "";
             $scope.iconTeam = {url: 'group.png', labelOrigin:{x:0,y:0}};
+            $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Uc93DkXYoiGlPSymsQ1a2EQj75UVsxo"
 
             $scope.showDetail = function(e, item) {
                 $scope.description = item.description;

@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -58,11 +59,29 @@ public class MainController {
     @ModelAttribute("allTargets")
     public Iterable<Target> populateTargets() {return this.targetRepository.findAll();}
 
+    @GetMapping(path = "/")
+    public ModelAndView homePage(){
+        return new ModelAndView("index.html");
+    }
+
     @GetMapping(path="/addPerson")
-    public ModelAndView addPerson(){
+    public ModelAndView addPerson(@ModelAttribute("error") String error, @ModelAttribute("sucess") String sucess){
         ModelAndView mv = new ModelAndView("addPerson.html");
         mv.addObject("person", new Person());
+        mv.addObject("errorMessage", error);
+        mv.addObject("sucessMessage", sucess);
         return mv;
+    }
+    @PostMapping(path="/person")
+    public String savePerson(@Valid Person person, BindingResult result, RedirectAttributes attributes){
+        if(result.hasErrors()) {
+            attributes.addFlashAttribute("error", "Erro ao inserir");
+        }
+        else{
+            personRepository.save(person);
+            attributes.addFlashAttribute("sucess", "Dado inserido com sucesso");
+        }
+        return "redirect:/addPerson";
     }
     @GetMapping(path="/addTeam")
     public ModelAndView addTeam(){
@@ -86,20 +105,30 @@ public class MainController {
 
 
     @PostMapping(path="/addTeam", params = {"saveTeam"})
-    @ResponseBody
-    public String saveTeam(@Valid Team team, BindingResult result){
+    public String saveTeam(@Valid Team team, BindingResult result, RedirectAttributes redirectAttributes){
         if(result.hasErrors())
-            return "erro";
+            redirectAttributes.addFlashAttribute("error", result.getGlobalError().toString());
         else{
             teamRepository.save(team);
-            return String.valueOf(team.getId());
+            redirectAttributes.addFlashAttribute("sucess", "Equipe cadastrada com sucesso");
         }
-
+        return "redirect:/addTeam";
     }
     @GetMapping(path="/listTeams")
     public ModelAndView listTeams(){
         ModelAndView mv = new ModelAndView("listTeam.html");
         mv.addObject("teams",teamRepository.findAll());
+        return mv;
+    }
+    @GetMapping(path = "/teamsSituation")
+    public ModelAndView teamsSituation(){
+        ModelAndView mv = new ModelAndView("teamSituation.html");
+        mv.addObject("nao_iniciado", remoteDeviceRepository.countByStatus("NAO_INICIADO"));
+        mv.addObject("deslocamento", remoteDeviceRepository.countByStatus("DESLOCAMENTO"));
+        mv.addObject("acao", remoteDeviceRepository.countByStatus("AÇÃO"));
+        mv.addObject("encerrada", remoteDeviceRepository.countByStatus("ENCERRADA"));
+        mv.addObject("em_atencao", remoteDeviceRepository.countByStatus("EM_ATENÇÃO"));
+        mv.addObject("total", remoteDeviceRepository.count());
         return mv;
     }
     @GetMapping(path="/delTeam")
@@ -123,24 +152,16 @@ public class MainController {
         return "addTarget";
     }
     @PostMapping(path="/addTarget", params = {"save"})
-    public String saveTarget(Target target, BindingResult result){
+    public String saveTarget(Target target, BindingResult result, RedirectAttributes redirectAttributes){
         if(result.hasErrors())
-            return "erro";
+            redirectAttributes.addFlashAttribute("error", result.getGlobalError().toString());
         else {
             targetRepository.save(target);
-            return "addTarget";
+            redirectAttributes.addFlashAttribute("sucess", "Entidade inserida com sucesso");
         }
+        return "redirect:/addTarget";
     }
-    @PostMapping(path="/person")
-    @ResponseBody
-    public String savePerson(@Valid Person person, BindingResult result){
-        if(result.hasErrors())
-            return "Erro";
-        else{
-            personRepository.save(person);
-            return person.name;
-        }
-    }
+
     @GetMapping(path="/addRemoteDevice")
     public ModelAndView addRemoteDevice(){
         ModelAndView mv = new ModelAndView("addRemoteDevice.html");
@@ -148,15 +169,14 @@ public class MainController {
         return mv;
     }
     @PostMapping(path="/addRemoteDevice")
-    @ResponseBody
-    public String saveRemoteDevice(@Valid RemoteDevice device, BindingResult result){
+    public String saveRemoteDevice(@Valid RemoteDevice device, BindingResult result, RedirectAttributes redirectAttributes){
         if(result.hasErrors())
-            return "erro";
+            redirectAttributes.addFlashAttribute("error", result.getGlobalError().toString());
         else{
             remoteDeviceRepository.save(device);
-            return String.valueOf(device.getId());
+            redirectAttributes.addFlashAttribute("sucess", "Dispositivo cadastrado com sucesso ");
         }
-
+        return "redirect:/addRemoteDevice";
     }
 
     @GetMapping(path="/map2")
@@ -193,7 +213,7 @@ public class MainController {
         try{
             Team t = teamRepository.findById(teamId).orElseThrow(()-> new ResourceAccessException("Team"));
             String destId = t.getRemoteDevice().getMessagingId();
-            if(destId == null || destId==""){
+            if(destId == null || destId.equals("")){
                 return "no";
             }
             Integer id = random.nextInt(9999);
@@ -264,5 +284,6 @@ public class MainController {
         else
             return 0;
     }
+
 
 }

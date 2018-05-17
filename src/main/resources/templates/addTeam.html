@@ -15,6 +15,7 @@
 </head>
 <body>
 <div class="container">
+    <div th:replace="fragments/main :: menu"></div>
     <form action="#" th:object="${team}" th:action="@{/addTeam}" method="post">
         <div class="form-group">
             <label for="description">Descrição</label>
@@ -28,7 +29,7 @@
                     <th>Seq</th>
                     <th>Nome</th>
                     <th>
-                        <button type="submit" name="addMember" class="btn btn-primary">Add Member</button>
+                        <button type="submit" name="addMember" class="btn btn-primary">Adicionar Fiscal</button>
                     </th>
                 </tr>
                 </thead>
@@ -44,7 +45,7 @@
                     </td>
 
                     <td>
-                        <button type="submit" name="removeMember" class="btn btn-primary" th:value="${stat.index}">Remove row</button>
+                        <button type="submit" name="removeMember" class="btn btn-primary" th:value="${stat.index}">Remover</button>
                     </td>
                 </tr>
                 </tbody>
