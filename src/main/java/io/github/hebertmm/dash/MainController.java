@@ -120,7 +120,7 @@ public class MainController {
         mv.addObject("teams",teamRepository.findAll());
         return mv;
     }
-    @GetMapping(path = "/teamsSituation")
+    @GetMapping(path = "/teamStat")
     public ModelAndView teamsSituation(){
         ModelAndView mv = new ModelAndView("teamSituation.html");
         mv.addObject("nao_iniciado", remoteDeviceRepository.countByStatus("NAO_INICIADO"));
@@ -213,7 +213,7 @@ public class MainController {
             Team t = teamRepository.findById(teamId).orElseThrow(()-> new ResourceAccessException("Team"));
             String destId = t.getRemoteDevice().getMessagingId();
             if(destId == null || destId.equals("")){
-                return "no";
+                return "redirect:/messageConsole";
             }
             Integer id = random.nextInt(9999);
             Map<String,String> map = new HashMap<>();
@@ -222,7 +222,7 @@ public class MainController {
             org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
             message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
             org.springframework.messaging.Message<Message> msgFinal = new GenericMessage<Message>(message1);
-            if(true){//channel.send(msgFinal)) {
+            if(channel.send(msgFinal)) {
                 MyMessage msg = new MyMessage();
                 msg.setTeam(t);
                 msg.setType("sent");
