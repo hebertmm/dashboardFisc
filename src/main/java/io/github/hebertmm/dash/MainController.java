@@ -208,7 +208,6 @@ public class MainController {
 
 
     @GetMapping(path="/sendMessage")
-    @ResponseBody
     public String sendMessage(@RequestParam String message, @RequestParam Integer teamId){
         try{
             Team t = teamRepository.findById(teamId).orElseThrow(()-> new ResourceAccessException("Team"));
@@ -223,7 +222,7 @@ public class MainController {
             org.jivesoftware.smack.packet.Message message1 = new org.jivesoftware.smack.packet.Message();
             message1.addExtension(new GcmPacketExtension(MessageMapper.toJsonString(outMessage)));
             org.springframework.messaging.Message<Message> msgFinal = new GenericMessage<Message>(message1);
-            if(channel.send(msgFinal)) {
+            if(true){//channel.send(msgFinal)) {
                 MyMessage msg = new MyMessage();
                 msg.setTeam(t);
                 msg.setType("sent");
@@ -231,13 +230,13 @@ public class MainController {
                 msg.setFirebaseId(id);
                 msg.setTimestamp(msgFinal.getHeaders().getTimestamp());
                 myMessageRepository.save(msg);
-                return "yes";
+                return "redirect:/messageConsole";
             }
             else
-                return "no";
+                return "redirect:/messageConsole";
         }catch(ResourceAccessException e){
-            e.printStackTrace();
-            return "no";
+            //e.printStackTrace();
+            return "Erro ao enviar a mensagem";
         }
 
     }
