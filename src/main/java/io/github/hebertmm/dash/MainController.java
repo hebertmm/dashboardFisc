@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.GenericMessage;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -208,11 +209,14 @@ public class MainController {
 
 
     @GetMapping(path="/sendMessage")
-    public String sendMessage(@RequestParam String message, @RequestParam Integer teamId){
+    public String sendMessage(@RequestParam String message, @RequestParam Integer teamId,
+                              RedirectAttributes redirectAttributes){
         try{
             Team t = teamRepository.findById(teamId).orElseThrow(()-> new ResourceAccessException("Team"));
             String destId = t.getRemoteDevice().getMessagingId();
             if(destId == null || destId.equals("")){
+                redirectAttributes.addFlashAttribute("error", "Id FCM inválido, aguarde alguns" +
+                        " instantes e tente enviar novamente");
                 return "redirect:/messageConsole";
             }
             Integer id = random.nextInt(9999);
@@ -230,16 +234,20 @@ public class MainController {
                 msg.setFirebaseId(id);
                 msg.setTimestamp(msgFinal.getHeaders().getTimestamp());
                 myMessageRepository.save(msg);
+                redirectAttributes.addFlashAttribute("sucess", "Mensagem enviada!");
                 return "redirect:/messageConsole";
             }
-            else
+            else {
+                redirectAttributes.addFlashAttribute("error", "Erro no servidor de mensagens");
                 return "redirect:/messageConsole";
+            }
         }catch(ResourceAccessException e){
-            //e.printStackTrace();
-            return "Erro ao enviar a mensagem";
+            redirectAttributes.addFlashAttribute("error",e.getLocalizedMessage());
+            return "redirect:/messageConsole";
         }
 
     }
+
     @PutMapping(path="/updateRemoteDevice/{id}")
     @ResponseBody
     public RemoteDevice updateRemoteDevice(@PathVariable(value = "id") Integer id,
@@ -269,9 +277,11 @@ public class MainController {
     }
 
     @GetMapping(path="/messageConsole")
-    public ModelAndView showMessageConsole(){
+    public ModelAndView showMessageConsole(@ModelAttribute("error") String error, @ModelAttribute("sucess") String sucess){
         ModelAndView mv = new ModelAndView("messageConsole.html");
         mv.addObject("teams", teamRepository.findAll());
+        mv.addObject("errorMessage", error);
+        mv.addObject("sucessMessage", sucess);
         return mv;
     }
     @GetMapping(path = "/idByNumber")
