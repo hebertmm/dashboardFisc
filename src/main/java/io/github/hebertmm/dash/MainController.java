@@ -1,9 +1,9 @@
-package io.github.***REMOVED***mm.dash;
+package io.github.hebertmm.dash;
 
-import io.github.***REMOVED***mm.dash.domain.*;
-import io.github.***REMOVED***mm.dash.message.CcsOutMessage;
-import io.github.***REMOVED***mm.dash.message.MessageMapper;
-import io.github.***REMOVED***mm.dash.util.geoutils.Geoutils;
+import io.github.hebertmm.dash.domain.*;
+import io.github.hebertmm.dash.message.CcsOutMessage;
+import io.github.hebertmm.dash.message.MessageMapper;
+import io.github.hebertmm.dash.util.geoutils.Geoutils;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smackx.gcm.packet.GcmPacketExtension;
 import org.springframework.beans.factory.annotation.Autowired;

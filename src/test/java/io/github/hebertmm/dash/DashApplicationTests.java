@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash;
+package io.github.hebertmm.dash;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

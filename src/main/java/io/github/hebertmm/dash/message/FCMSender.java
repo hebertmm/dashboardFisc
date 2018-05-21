@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash.message;
+package io.github.hebertmm.dash.message;
 
 import org.jivesoftware.smackx.gcm.packet.GcmPacketExtension;
 import org.slf4j.Logger;

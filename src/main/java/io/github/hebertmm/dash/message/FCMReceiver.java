@@ -1,8 +1,8 @@
-package io.github.***REMOVED***mm.dash.message;
+package io.github.hebertmm.dash.message;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.***REMOVED***mm.dash.domain.*;
+import io.github.hebertmm.dash.domain.*;
 import org.jivesoftware.smackx.gcm.packet.GcmPacketExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

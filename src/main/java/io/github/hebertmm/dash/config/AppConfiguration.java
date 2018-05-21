@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash.config;
+package io.github.hebertmm.dash.config;
 
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.roster.Roster;
@@ -19,10 +19,10 @@ public class AppConfiguration {
 	public XmppConnectionFactoryBean xmppConnectionFactoryBean() throws XmppStringprepException {
 
 		XMPPTCPConnectionConfiguration connectionConfiguration = XMPPTCPConnectionConfiguration.builder()
-				.setXmppDomain("io.github.***REMOVED***mm")
+				.setXmppDomain("io.github.hebertmm")
 				.setHost("fcm-xmpp.googleapis.com").setPort(5235)
 				.setConnectTimeout(10000)
-				.setUsernameAndPassword("***REMOVED***@gcm.googleapis.com","***REMOVED***")
+				.setUsernameAndPassword("XXXXXXXX@gcm.googleapis.com","XXXXXXXXXXXXX")
 				.setSecurityMode(SecurityMode.ifpossible)
 				.setSendPresence(false)
 				.setSocketFactory(SSLSocketFactory.getDefault())

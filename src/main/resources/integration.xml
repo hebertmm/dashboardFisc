@@ -12,7 +12,7 @@
 	http://www.springframework.org/schema/integration/xmpp
 	http://www.springframework.org/schema/integration/xmpp/spring-integration-xmpp.xsd">
 
-	<context:component-scan base-package="io.github.***REMOVED***mm.dash" />
+	<context:component-scan base-package="io.github.hebertmm.dash" />
 
 	<int:channel id="xmppInbound" />
 

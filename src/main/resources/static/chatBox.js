@@ -1,6 +1,6 @@
-var app = angular.module('chatBox', []);
+var app = angular.module('chatBox', ['luegg.directives']);
         app.controller('boxCtrl', function($scope, $http, $interval) {
-
+            $scope.messages = []
             $http.get("messageList").then(function(response){
                         $scope.messages = response.data;
             });
@@ -14,4 +14,5 @@ var app = angular.module('chatBox', []);
                 else
                     return false;
               }
+
         });

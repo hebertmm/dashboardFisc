@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash.config;
+package io.github.hebertmm.dash.config;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -32,10 +32,10 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder
                 .inMemoryAuthentication()
-                .withUser("***REMOVED***").password("{noop}***REMOVED***")
+                .withUser("XXXXXXXXXX").password("{noop}XXXXXXXXX")
                 .roles("USER")
                 .and()
-                .withUser("***REMOVED***").password("{noop}***REMOVED******REMOVED***")
+                .withUser("XXXXXXXXXX").password("{noop}XXXXXXXXXXXX")
                 .roles("USER");
     }
 }

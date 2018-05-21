@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash.domain;
+package io.github.hebertmm.dash.domain;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash.util.geoutils;
+package io.github.hebertmm.dash.util.geoutils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

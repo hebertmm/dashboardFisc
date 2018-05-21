@@ -1,4 +1,4 @@
-package io.github.***REMOVED***mm.dash.util.geoutils;
+package io.github.hebertmm.dash.util.geoutils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
